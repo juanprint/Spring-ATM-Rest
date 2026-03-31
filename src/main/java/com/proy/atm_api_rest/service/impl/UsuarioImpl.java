@@ -1,6 +1,7 @@
 package com.proy.atm_api_rest.service.impl;
 
 import com.proy.atm_api_rest.model.dao.UsuarioDao;
+import com.proy.atm_api_rest.model.dto.UsuarioDto;
 import com.proy.atm_api_rest.model.entity.Usuario;
 import com.proy.atm_api_rest.service.IUsuario;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +18,18 @@ public class UsuarioImpl implements IUsuario {
     
     @Transactional
     @Override
-    public Usuario save(Usuario usuario) {
+    public Usuario save(UsuarioDto usuarioDto) {
     //toma los valores de los atributos del objeto Java
         // y construye una sentencia SQL real
+    //Builder: Instanciar la informacion e ingresar sin necesidad de usat set y get
+        Usuario usuario = Usuario.builder()
+                .usuarioId(usuarioDto.getUsuarioId())
+                .nombre(usuarioDto.getNombre())
+                .apellido(usuarioDto.getApellido())
+                .dni(usuarioDto.getDni())
+                .email(usuarioDto.getEmail())
+                .passwordHash(usuarioDto.getPasswordHash())
+                .build();
         return usuarioDao.save(usuario);
     }
     @Transactional(readOnly = true)
