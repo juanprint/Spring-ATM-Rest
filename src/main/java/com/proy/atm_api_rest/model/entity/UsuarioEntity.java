@@ -2,7 +2,6 @@ package com.proy.atm_api_rest.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
 
@@ -13,7 +12,7 @@ import java.io.Serializable;
 @Builder
 @Table(name="usuarios")
 
-public class Usuario implements Serializable {
+public class UsuarioEntity implements Serializable {
     @Id
     @Column(name="usuario_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)

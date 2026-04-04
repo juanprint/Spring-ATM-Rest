@@ -1,81 +1,53 @@
 package com.proy.atm_api_rest.controller;
 
 import com.proy.atm_api_rest.model.dto.UsuarioDto;
-import com.proy.atm_api_rest.model.entity.Usuario;
-import com.proy.atm_api_rest.service.IUsuario;
+import com.proy.atm_api_rest.service.interfaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
 public class UsuarioController {
+    //El controller va a llamar al servicio,
     @Autowired
     //¿Quién implementa esta interfaz IUsuario?"
     //UsuarioImpl en service
-    private IUsuario usuarioService;
+    private IUsuarioService usuarioService;
 
-    @PostMapping("usuario")
-    @ResponseStatus(HttpStatus.CREATED)
-    public UsuarioDto create(@RequestBody UsuarioDto usuarioDto){
-        Usuario usuarioSave=usuarioService.save(usuarioDto);
-        return UsuarioDto.builder()
-                .usuarioId(usuarioSave.getUsuarioId())
-                .nombre(usuarioSave.getNombre())
-                .apellido(usuarioSave.getApellido())
-                .dni(usuarioSave.getDni())
-                .email(usuarioSave.getEmail())
-                .passwordHash(usuarioSave.getPasswordHash())
-                .build();
+    // FindAll
+    @GetMapping("/usuarios")
+    public ResponseEntity<List<UsuarioDto>> findAll(){
+        return new ResponseEntity<>(this.usuarioService.findAll(),HttpStatus.OK);
     }
 
-    @PutMapping ("usuario")
-    @ResponseStatus(HttpStatus.CREATED)
-    public UsuarioDto update(@RequestBody UsuarioDto usuarioDto){
-        Usuario usuarioUpdate=usuarioService.save(usuarioDto);
-        return UsuarioDto.builder()
-                .usuarioId(usuarioUpdate.getUsuarioId())
-                .nombre(usuarioUpdate.getNombre())
-                .apellido(usuarioUpdate.getApellido())
-                .dni(usuarioUpdate.getDni())
-                .email(usuarioUpdate.getEmail())
-                .passwordHash(usuarioUpdate.getPasswordHash())
-                .build();
+    //Find by id
+    @GetMapping("/usuario/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<UsuarioDto> showById(@PathVariable Integer id){
+        return new ResponseEntity<>(this.usuarioService.findById(id),HttpStatus.OK);
+
+    }
+
+    //Create user
+    //Tiene interaccion 2 veces con el dto
+    @PostMapping("/crear")
+    public ResponseEntity<UsuarioDto> create(@RequestBody UsuarioDto usuarioDto){
+        return new ResponseEntity<>(this.usuarioService.createUser(usuarioDto),HttpStatus.CREATED);
+    }
+
+    @PutMapping ("usuario/{id}")
+    public ResponseEntity<UsuarioDto> updateUser(@RequestBody UsuarioDto usuarioDto,@PathVariable Integer id){
+        return new ResponseEntity<>(this.usuarioService.updateUser(usuarioDto,id),HttpStatus.OK);
     }
 
     @DeleteMapping("usuario/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id){
-        Map<String, Object> response=new HashMap<>();
-        try {
-            Usuario usuarioDelete=usuarioService.findById(id);
-            usuarioService.delete(usuarioDelete);
-            return new ResponseEntity<>(usuarioDelete, HttpStatus.NO_CONTENT);
-        } catch (DataAccessException exDt) {
-            response.put("mensaje",exDt.getMessage());
-            response.put("usuario",null);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-
-        }
+        return new ResponseEntity<>(this.usuarioService.deleteUser(id),HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("usuario/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public UsuarioDto showById(@PathVariable Integer id){
-        Usuario usuario= usuarioService.findById(id);
-        return UsuarioDto.builder()
-                .usuarioId(usuario.getUsuarioId())
-                .nombre(usuario.getNombre())
-                .apellido(usuario.getApellido())
-                .dni(usuario.getDni())
-                .email(usuario.getEmail())
-                .passwordHash(usuario.getPasswordHash())
-                .build();
-    }
 
 }
