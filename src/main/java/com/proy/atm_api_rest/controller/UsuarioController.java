@@ -15,7 +15,7 @@ public class UsuarioController {
     //El controller va a llamar al servicio,
     @Autowired
     //¿Quién implementa esta interfaz IUsuario?"
-    //UsuarioImpl en service
+    //UsuarioImpl en service, usuarioService = UsuarioServiceImpl
     private IUsuarioService usuarioService;
 
     // FindAll
