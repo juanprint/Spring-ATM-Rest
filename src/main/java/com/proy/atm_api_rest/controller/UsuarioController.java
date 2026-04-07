@@ -44,8 +44,8 @@ public class UsuarioController {
         return new ResponseEntity<>(this.usuarioService.updateUser(usuarioDto,id),HttpStatus.OK);
     }
 
-    @DeleteMapping("usuario/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id){
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Integer id){
         return new ResponseEntity<>(this.usuarioService.deleteUser(id),HttpStatus.NO_CONTENT);
     }
 

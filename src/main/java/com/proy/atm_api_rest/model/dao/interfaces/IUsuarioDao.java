@@ -13,9 +13,9 @@ public interface IUsuarioDao {
 //Tipo Entity ya que la bd solo entiende Entitys
     List<UsuarioEntity> findAll();
     Optional<UsuarioEntity> findById(Integer id);
-    UsuarioEntity saveUsuario(UsuarioEntity usuarioEntity);
-    UsuarioEntity updateUsuario(UsuarioEntity usuarioEntity);
-    UsuarioEntity deleteUsuario(UsuarioEntity usuarioEntity);
+    void saveUsuario(UsuarioEntity usuarioEntity);
+    void updateUsuario(UsuarioEntity usuarioEntity);
+    void deleteUsuario(UsuarioEntity usuarioEntity);
 
 
 }

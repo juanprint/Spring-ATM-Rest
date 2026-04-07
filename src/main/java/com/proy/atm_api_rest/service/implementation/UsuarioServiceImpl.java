@@ -75,6 +75,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
             currentUsuarioEntity.setDni(usuarioDto.getDni());
             currentUsuarioEntity.setEmail(usuarioDto.getEmail());
             currentUsuarioEntity.setPasswordHash(usuarioDto.getPasswordHash());
+            //usuarioDao genera una sentencia sql update
             this.usuarioDao.updateUsuario(currentUsuarioEntity);
             //retorno
             ModelMapper modelMapper=new ModelMapper();
@@ -91,9 +92,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
         if(usuarioEntity.isPresent()){
             //Usuario a eliminar
             UsuarioEntity currentUsuarioEntity=usuarioEntity.get();
-            //Eliminamos el usuario
+            //Eliminamos el usuario en la bd
             this.usuarioDao.deleteUsuario(currentUsuarioEntity);
-            ModelMapper modelMapper=new ModelMapper();
             return "Usuario con el ID "+id+" ha sido eliminado";
         }else{
             return "El usuario con ID"+id+" no existe";
