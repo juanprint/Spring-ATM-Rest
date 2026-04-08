@@ -14,22 +14,22 @@ import java.io.Serializable;
 
 public class UsuarioEntity implements Serializable {
     @Id
-    @Column(name="usuario_id")
+    @Column(name="usuario_id",nullable = false)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer usuarioId;
 
-    @Column(name="nombre")
+    @Column(name="nombre",nullable = false)
     private String nombre;
 
-    @Column(name="apellido")
+    @Column(name="apellido",nullable = false)
     private String apellido;
 
-    @Column(name="dni")
+    @Column(name="dni",nullable = false)
     private String dni;
 
-    @Column(name="email")
+    @Column(name="email",nullable = false)
     private String email;
 
-    @Column(name="password_Hash")
+    @Column(name="password_Hash",nullable = false)
     private String passwordHash;
 }

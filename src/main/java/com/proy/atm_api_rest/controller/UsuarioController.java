@@ -34,7 +34,7 @@ public class UsuarioController {
 
     //Create user
     //Tiene interaccion 2 veces con el dto
-    @PostMapping("/crear")
+    @PostMapping("/usuario")
     public ResponseEntity<UsuarioDto> create(@RequestBody UsuarioDto usuarioDto){
         return new ResponseEntity<>(this.usuarioService.createUser(usuarioDto),HttpStatus.CREATED);
     }
@@ -44,7 +44,7 @@ public class UsuarioController {
         return new ResponseEntity<>(this.usuarioService.updateUser(usuarioDto,id),HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("usuario/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id){
         return new ResponseEntity<>(this.usuarioService.deleteUser(id),HttpStatus.NO_CONTENT);
     }
